@@ -177,7 +177,20 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+<script>
 
+  const username=localStorage.getItem("username");
+  const email=localStorage.getItem("email");
+
+  if(username && email){
+    document.getElementById("name").value=username
+    document.getElementById("email").value=email
+  }else {
+            // User not logged in — redirect to login page
+            window.location.href = "login.html";
+  }
+
+</script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
