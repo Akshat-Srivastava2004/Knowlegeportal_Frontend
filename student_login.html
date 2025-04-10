@@ -247,6 +247,8 @@
           },
           body:payload
         })
+
+        console.log("the response is ",data)
         .then(res=>res.json())
         .then(data=>{
           if(data.username){
