@@ -76,7 +76,7 @@
 
     <script>
         // Fetch MCQs for the course from the server
-        fetch('/quiz')
+        fetch('"https://knowlegeportal-backend.onrender.com/quiz')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('questions-container');
