@@ -137,10 +137,11 @@
                 },
                 body: JSON.stringify(answers)
             });
-
+            console.log("the response is ",response)
             if (response.ok) {
+
                 // ✅ Redirect if evaluation successful
-                window.location.href = "result.html";
+               console.log("the response is ",response)
             } else {
                 alert("Evaluation failed. Please check your answers.");
             }
