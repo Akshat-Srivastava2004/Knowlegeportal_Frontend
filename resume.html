@@ -72,7 +72,7 @@
     <div class="container mt-5">
         <h2 class="text-center mb-4">Teacher Resume Submission</h2>
         <p class="text-center mb-5">Please upload your resume for evaluation. Ensure that your file is in PDF format and not larger than 2MB.</p>
-        <form action="https://knowlegeportal-backend.onrender.com/teacherresume" method="post" enctype="multipart/form-data">
+        <form id="teacherResumeForm" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="resume" class="form-label">Upload Resume (PDF only)</label>
                 <input type="file" class="form-control" id="resume" name="resume" accept=".pdf" required>
@@ -177,20 +177,46 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-<script>
-
-  const username=localStorage.getItem("username");
-  const email=localStorage.getItem("email");
-
-  if(username && email){
-    document.getElementById("name").value=username
-    document.getElementById("email").value=email
-  }else {
-            // User not logged in — redirect to login page
-        window.location.href = "login.html";
-  }
-
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("teacherResumeForm");
+            const accessToken = localStorage.getItem("accesstoken");
+        
+            if (!accessToken) {
+                window.location.href = "login.html";
+                return;
+            }
+        
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // prevent default form submission
+        
+                const formData = new FormData(form);
+        
+                fetch("https://knowlegeportal-backend.onrender.com/teacherresume", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Success:", data);
+                    alert("Resume submitted successfully!");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("There was an error submitting your resume.");
+                });
+            });
+        
+            // Pre-fill name and email from tokens if needed
+            const username = localStorage.getItem("username");
+            const email = localStorage.getItem("email");
+            if (username) document.getElementById("name").value = username;
+            if (email) document.getElementById("email").value = email;
+        });
+        </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
