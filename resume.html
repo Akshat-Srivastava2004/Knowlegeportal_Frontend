@@ -211,8 +211,8 @@
             });
         
             // Pre-fill name and email from tokens if needed
-            const username = localStorage.getItem("username");
-            const email = localStorage.getItem("email");
+            const username = localStorage.getItem("teacherusername");
+            const email = localStorage.getItem("teacheremail");
             if (username) document.getElementById("name").value = username;
             if (email) document.getElementById("email").value = email;
         });
