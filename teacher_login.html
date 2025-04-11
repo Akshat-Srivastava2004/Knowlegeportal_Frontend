@@ -249,6 +249,7 @@
         .then(data=>{
           if(data.username){
             // save username to localstorage 
+            localStorage.setItem("accesstoken",data.access_token);
             localStorage.setItem("teacherusername",data.username)
             localStorage.setItem("teacheremail",data.email)
 
