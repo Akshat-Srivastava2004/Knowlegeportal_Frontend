@@ -98,7 +98,7 @@ top: 13px;
                          registration form</h3>
     
                     <!-- Add form tag with action and enctype attributes -->
-                    <form action="https://knowlegeportal-backend.onrender.com/studentregister" method="POST" enctype="multipart/form-data">
+                    <form id="studentregister" enctype="multipart/form-data">
                       <div class="row">
                         <div class="col-md-6 mb-4">
                           <div data-mdb-input-init class="form-outline">
@@ -279,7 +279,33 @@ top: 13px;
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+<script>
+  document.getElementById("studentregister").addEventListener("submit",function(e){
+    e.preventDefault();
+    const form=document.getElementById("studenregister");
+    const formData = new FormData(form);
+    const payload=new URLSearchParams(formData);
+    fetch("https://knowlegeportal-backend.onrender.com/studentregister",{
+      method:"POST",
+      headers:{
+            "Content-Type":"application/x-www-form-urlencoded"
+          },
+          body:payload
+    })
+    .then(res=>res.json())
+        .then(data=>{
+          if(data.username && data.email){
+            console.log("the response is ",data)
+            window.location.href="student_login.html"
+          }else{
+              alert("student registration failed ")
+          }
+        })
+        .catch(err=>{
+          console.error("Error:",err)
+        });
+  })
+</script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
