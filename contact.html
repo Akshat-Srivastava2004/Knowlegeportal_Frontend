@@ -136,7 +136,7 @@
                         tabindex="0"></iframe>
                 </div>
                 <div class="col-lg-4 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <form action="https://knowlegeportal-backend.onrender.com/feedback" method="POST" enctype="multipart/form-data">
+                    <form id="feedbackform" enctype="multipart/form-data">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -251,7 +251,38 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+<script>
+       
+    document.getElementById("feedbackform").addEventListener("submit",function(e){
+        const accessToken = localStorage.getItem("accesstoken");
+        
+        if (!accessToken) {
+            window.location.href = "login.html";
+            return;
+        }
+        e.preventDefault();
+        const formData = new FormData(form);
+        
+        fetch("https://knowlegeportal-backend.onrender.com/feedback",{
+        method:"POST",
+        headers: {
+                "Authorization": `Bearer ${accessToken}`
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Success:", data);
+                    window.location.href="index.html"
+                    alert("Feedback submitted successfully!");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("There was an error submitting your Feedback.");
+                });
+})
+    
+</script>
 <script>
     
     const username = localStorage.getItem("username");
